@@ -46,7 +46,10 @@ export default function Avatar({
     return (
       <div className={sizingStyles[sizing]}>
         <img
-          src={value || ""}
+          src={
+            value ||
+            "https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?semt=ais_hybrid&w=740"
+          }
           alt="Avatar Caqap.id"
           className={`w-full h-full object-cover rounded-full overflow-hidden`}
         />
