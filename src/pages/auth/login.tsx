@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { GLOBAL_ICONS } from "../../utils/icons";
+import { useCookies } from "react-cookie";
 import Input from "../../components/form/Input";
 import Button from "../../components/button/Button";
 import toast from "react-hot-toast";
@@ -12,6 +13,7 @@ type LoginForm = {
 };
 
 const Login = () => {
+  const [_, setCookie] = useCookies();
   const navigate = useNavigate();
   const partnerEndpoint = PartnerEndpoint();
 
@@ -23,13 +25,17 @@ const Login = () => {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      await toast.promise(partnerEndpoint.login.mutateAsync(data), {
-        loading: "Memuat...",
-        success: "Login berhasil",
-        error: "Email atau password salah",
-      });
+      await toast
+        .promise(partnerEndpoint.login.mutateAsync(data), {
+          loading: "Memuat...",
+          success: "Login berhasil",
+          error: "Email atau password salah",
+        })
+        .then((data) => {
+          setCookie("token", data.token);
+        });
 
-      navigate("/");
+      navigate("/partner");
     } catch (err) {
       console.error(err);
     }

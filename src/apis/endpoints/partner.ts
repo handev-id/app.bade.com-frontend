@@ -1,3 +1,4 @@
+import useLazyGetApi from "../methods/lazy-get";
 import usePostApi from "../methods/post";
 import { Partner } from "../models/partner";
 
@@ -15,8 +16,14 @@ export default function PartnerEndpoint() {
     key: ["LOGIN"],
   });
 
+  const checkToken = useLazyGetApi<Partner, {}>({
+    endpoint: "/partner/check-token",
+    key: ["CHECK_TOKEN"],
+  });
+
   return {
     register,
     login,
+    checkToken,
   };
 }

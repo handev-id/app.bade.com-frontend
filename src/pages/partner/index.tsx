@@ -2,8 +2,11 @@ import { IoArrowRedoSharp } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
 import PartnerLayout from "./layout";
 import Menu from "../../components/bade/Menu";
+import useStore from "../../utils/use-store";
+import { NumberFormatBase, NumericFormat } from "react-number-format";
 
 const Partner = () => {
+  const { partner } = useStore();
   return (
     <PartnerLayout>
       <div className="px-4 pb-4 space-y-4">
@@ -15,7 +18,12 @@ const Partner = () => {
               </h2>
               <div>
                 <span className="text-white font-black rounded-md underline text-2xl sm:text-3xl md:text-4xl mr-1">
-                  Rp. 12.000
+                  <NumericFormat
+                    value={partner?.balance}
+                    prefix="Rp."
+                    thousandSeparator=","
+                    displayType="text"
+                  />
                 </span>
               </div>
             </div>
@@ -25,11 +33,11 @@ const Partner = () => {
           </div>
           <div className="mt-6">
             <span className="font-bold text-base sm:text-lg md:text-xl">
-              Kode Partner
+              Kode Mitra
             </span>
             <div>
               <span className="text-white font-black rounded-md text-xl sm:text-2xl md:text-3xl mr-1">
-                PART-ABGDJE238
+                {partner?.code}
               </span>
             </div>
           </div>
