@@ -1,8 +1,7 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Partner } from "../../apis/models/partner";
 import { GLOBAL_ICONS } from "../../utils/icons";
-import Select, { OptionType } from "../../components/form/SelectInput";
 import Input from "../../components/form/Input";
 import Button from "../../components/button/Button";
 import toast from "react-hot-toast";
@@ -16,16 +15,18 @@ const Register = () => {
     handleSubmit,
     register,
     formState: { errors },
-    control,
     reset,
   } = useForm<Partner>();
 
   const onSubmit = async (data: Partner) => {
-    await toast.promise(partnerEndpoint.register.mutateAsync(data), {
-      loading: "Memuat...",
-      success: "Berhasil mendaftar",
-      error: "Gagal mendaftar, Email Sudah Terdaftar",
-    });
+    await toast.promise(
+      partnerEndpoint.register.mutateAsync({ ...data, type: "business" }),
+      {
+        loading: "Memuat...",
+        success: "Berhasil mendaftar",
+        error: "Gagal mendaftar, No Hp Sudah Terdaftar " + `(CODE: ${partnerEndpoint.register.error?.status})`,
+      }
+    );
     reset();
     navigate("/auth/login");
   };
@@ -41,85 +42,76 @@ const Register = () => {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
-          <Controller
-            control={control}
-            name="type"
-            render={({ field: { value, onChange } }) => (
-              <Select
-                value={value}
-                label="Tipe"
-                onChange={(val) => {
-                  onChange((val as OptionType).value);
-                }}
-                options={[
-                  { label: "Perorangan", value: "personal" },
-                  { label: "Bisnis / Juragan Angkot", value: "business" },
-                ]}
-                message={errors.type?.message}
-                isDefault
-              />
-            )}
-          />
+          <div>
+            <Input
+              leftItem={GLOBAL_ICONS.businessOutline}
+              placeholder="Masukkan Nama Anda"
+              sizing="sm"
+              label="Nama"
+              {...register("name", { required: "Nama wajib diisi" })}
+              message={errors.name?.message}
+            />
+          </div>
 
-          <Input
-            leftItem={GLOBAL_ICONS.businessOutline}
-            placeholder="Masukkan Nama Bisnis Anda"
-            sizing="sm"
-            label="Nama"
-            message={errors.name?.message}
-            {...register("name", { required: "Nama bisnis wajib diisi" })}
-          />
+          <div>
+            <Input
+              leftItem={GLOBAL_ICONS.userType}
+              placeholder="Jumlah Angkot Yang Aktif Narik"
+              sizing="sm"
+              label="Jumlah Angkot"
+              type="number"
+              {...register("driversCount", {
+                valueAsNumber: true,
+                min: { value: 0, message: "Minimal 0" },
+                required: "Jumlah angkot wajib diisi",
+              })}
+              message={errors.driversCount?.message}
+            />
+          </div>
 
-          <Input
-            leftItem={GLOBAL_ICONS.userType}
-            placeholder="Jumlah Angkot"
-            sizing="sm"
-            label="Jumlah Sopir"
-            type="number"
-            message={errors.driversCount?.message}
-            {...register("driversCount", {
-              valueAsNumber: true,
-              min: { value: 0, message: "Minimal 0" },
-              required: "Jumlah angkot wajib diisi",
-            })}
-          />
+          <div>
+            <Input
+              leftItem={GLOBAL_ICONS.email}
+              placeholder="Email (Boleh Dikosongkan)"
+              sizing="sm"
+              label="Email (Boleh Dikosongkan)"
+              type="email"
+              {...register("email", {
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: "Format email tidak valid",
+                },
+                required: false,
+              })}
+              message={errors.email?.message}
+            />
+          </div>
 
-          <Input
-            leftItem={GLOBAL_ICONS.email}
-            placeholder="Email"
-            sizing="sm"
-            label="Email"
-            type="email"
-            message={errors.email?.message}
-            {...register("email", {
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: "Format email tidak valid",
-              },
-            })}
-          />
+          <div>
+            <Input
+              leftItem={GLOBAL_ICONS.phone}
+              placeholder="Nomor HP (Wajib Diisi)"
+              sizing="sm"
+              label="Nomor HP (Wajib Diisi)"
+              {...register("phone", { required: "Wajib Diisi" })}
+              message={errors.phone?.message}
+            />
+          </div>
 
-          <Input
-            leftItem={GLOBAL_ICONS.phone}
-            placeholder="Nomor HP"
-            sizing="sm"
-            label="Telepon"
-            message={errors.phone?.message}
-            {...register("phone")}
-          />
-
-          <Input
-            leftItem={GLOBAL_ICONS.gembok}
-            placeholder="Password"
-            sizing="sm"
-            label="Password"
-            type="password"
-            message={errors.password?.message}
-            {...register("password", {
-              required: "Password wajib diisi",
-              minLength: { value: 6, message: "Minimal 6 karakter" },
-            })}
-          />
+          <div>
+            <Input
+              leftItem={GLOBAL_ICONS.gembok}
+              placeholder="Password"
+              sizing="sm"
+              label="Password"
+              type="password"
+              {...register("password", {
+                required: "Password wajib diisi",
+                minLength: { value: 6, message: "Minimal 6 karakter" },
+              })}
+              message={errors.password?.message}
+            />
+          </div>
 
           <Button type="submit" style={{ marginTop: "20px" }} sizing="fullSm">
             Daftar

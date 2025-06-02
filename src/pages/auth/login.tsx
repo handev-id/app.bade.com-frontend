@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import PartnerEndpoint from "../../apis/endpoints/partner";
 
 type LoginForm = {
-  email: string;
+  phone: string;
   password: string;
 };
 
@@ -29,13 +29,12 @@ const Login = () => {
         .promise(partnerEndpoint.login.mutateAsync(data), {
           loading: "Memuat...",
           success: "Login berhasil",
-          error: "Email atau password salah",
+          error: "Nomor Hp atau password salah",
         })
         .then((data) => {
           setCookie("token", data.token);
+          navigate("/partner");
         });
-
-      navigate("/partner");
     } catch (err) {
       console.error(err);
     }
@@ -53,18 +52,14 @@ const Login = () => {
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4 space-y-4">
           <Input
-            leftItem={GLOBAL_ICONS.email}
-            placeholder="Masukkan Email"
+            leftItem={GLOBAL_ICONS.phone}
+            placeholder="Masukkan Nomor Hp Yang Sudah Terdaftar"
             sizing="sm"
-            label="Email"
-            type="email"
-            message={errors.email?.message}
-            {...register("email", {
+            label="Nomor Hp"
+            type="text"
+            message={errors.phone?.message}
+            {...register("phone", {
               required: "Email wajib diisi",
-              pattern: {
-                value: /^\S+@\S+$/i,
-                message: "Format email tidak valid",
-              },
             })}
           />
 

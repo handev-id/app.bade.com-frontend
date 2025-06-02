@@ -1,9 +1,13 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import Partner from "./pages/partner";
 import Drivers from "./pages/partner/drivers";
+import PartnerLayout from "./pages/partner/layout";
 
 const App = () => {
   return (
@@ -12,6 +16,7 @@ const App = () => {
         { path: "/", element: <Home /> },
         {
           path: "/partner",
+          element: <PartnerLayout />,
           children: [
             {
               path: "",

@@ -10,7 +10,7 @@ export default function PartnerEndpoint() {
 
   const login = usePostApi<
     { token: string },
-    { email: string; password: string }
+    { phone: string; password: string }
   >({
     endpoint: "/partner/login",
     key: ["LOGIN"],

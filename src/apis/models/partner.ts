@@ -4,7 +4,7 @@ import { Driver } from "./driver";
 export interface Partner extends BaseModel {
   uuid: string;
   code: string;
-  type: "OWNER" | "INDIVIDUAL" | string; // atau enum jika kamu punya enum Type
+  type: "business" | "personal";
   name: string;
   password: string;
   email?: string | null;

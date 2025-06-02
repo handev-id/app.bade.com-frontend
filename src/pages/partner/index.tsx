@@ -1,14 +1,13 @@
 import { IoArrowRedoSharp } from "react-icons/io5";
 import { FaUsers } from "react-icons/fa";
-import PartnerLayout from "./layout";
+import { NumericFormat } from "react-number-format";
 import Menu from "../../components/bade/Menu";
 import useStore from "../../utils/use-store";
-import { NumberFormatBase, NumericFormat } from "react-number-format";
 
 const Partner = () => {
   const { partner } = useStore();
   return (
-    <PartnerLayout>
+    <>
       <div className="px-4 pb-4 space-y-4">
         <div className="w-full rounded-2xl text-white p-4 bg-gradient-to-r shadow-lg from-blue-500 to-cyan-500">
           <div className="flex items-start justify-between">
@@ -72,7 +71,7 @@ const Partner = () => {
           </div>
         </div>
       </div>
-    </PartnerLayout>
+    </>
   );
 };
 

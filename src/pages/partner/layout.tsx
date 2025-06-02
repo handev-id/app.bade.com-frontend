@@ -1,24 +1,25 @@
-import { RiCustomerService2Line } from "react-icons/ri";
 import React, { useEffect } from "react";
-import Avatar from "../../components/Avatar";
-import { useLocation, useNavigate } from "react-router-dom";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { axiosInstance } from "../../apis/axios";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { useCookies } from "react-cookie";
+import Avatar from "../../components/Avatar";
 import PartnerEndpoint from "../../apis/endpoints/partner";
-import { axiosInstance } from "../../apis/axios";
 import useStore from "../../utils/use-store";
+import { IoMdArrowBack } from "react-icons/io";
 
-interface Props {
-  children: React.ReactNode;
+export interface PartnerLayoutProps {
   header?: {
     title: string;
     component?: () => React.ReactNode;
   };
 }
 
-const PartnerLayout = ({ children, header }: Props) => {
+const PartnerLayout = () => {
   const [cookie] = useCookies(["token"]);
   const { setPartner, partner } = useStore();
+  const header = useStore((state) => state.header);
   const navigate = useNavigate();
   const pathName = useLocation().pathname;
 
@@ -37,12 +38,17 @@ const PartnerLayout = ({ children, header }: Props) => {
             axiosInstance.defaults.headers.common.Authorization = `Bearer ${cookie.token}`;
             setPartner(data);
           },
+          onError: () => {
+            navigate("/auth/login", { replace: true });
+          },
         }
       );
+    } else {
+      navigate("/auth/login");
     }
   }, [cookie]);
 
-  if (!partner) {
+  if (partnerApi.checkToken.isPending) {
     return <div>Loading...</div>;
   }
 
@@ -58,7 +64,7 @@ const PartnerLayout = ({ children, header }: Props) => {
                 }
               />
               <div>
-                <h5 className="font-semibold">{partner.name}</h5>
+                <h5 className="font-semibold">{partner?.name}</h5>
                 <p className="text-sm opacity-60">Mitra</p>
               </div>
             </div>
@@ -73,18 +79,19 @@ const PartnerLayout = ({ children, header }: Props) => {
           <div className="relative z-[5] flex shadow items-center justify-between p-4">
             <button
               onClick={() => navigate(-1)}
-              className="rounded-lg hover:opacity-60 h-[40px] bg-neutral px-4"
+              className="rounded-lg hover:opacity-60 p-3 bg-neutral"
             >
-              <FaArrowLeft />
+              <IoMdArrowBack className="text-2xl" />
             </button>
             <div>
               <h4 className="font-bold text-xl text-gray-800">
                 {header?.title}
               </h4>
             </div>
+            {header?.component && <div>{header.component()}</div>}
           </div>
         )}
-        {children}
+        <Outlet />
       </div>
     </div>
   );
