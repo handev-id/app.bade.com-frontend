@@ -2,12 +2,13 @@ import { BaseModel } from "./base";
 import { Partner } from "./partner";
 
 export interface Driver extends BaseModel {
+  uuid: string;
   code: string;
   name: string;
   password: string;
-  phone?: string | null;
-  qrcode?: string | null;
+  phone: string;
+  qrcode?: string;
   income: number;
-  partner?: Partner | null;
+  partner: Partner;
   partnerId?: number | null;
 }

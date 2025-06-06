@@ -56,9 +56,9 @@ const Register = () => {
           <div>
             <Input
               leftItem={GLOBAL_ICONS.userType}
-              placeholder="Jumlah Angkot Yang Aktif Narik"
+              placeholder="Jumlah Sopir Yang Aktif Narik"
               sizing="sm"
-              label="Jumlah Angkot"
+              label="Jumlah Sopir"
               type="number"
               {...register("driversCount", {
                 valueAsNumber: true,

@@ -3,11 +3,12 @@ import { FaUsers } from "react-icons/fa";
 import { NumericFormat } from "react-number-format";
 import Menu from "../../components/bade/Menu";
 import useStore from "../../utils/use-store";
+import Wrapper from "../wrapper";
 
 const Partner = () => {
   const { partner } = useStore();
   return (
-    <>
+    <Wrapper title="Home">
       <div className="px-4 pb-4 space-y-4">
         <div className="w-full rounded-2xl text-white p-4 bg-gradient-to-r shadow-lg from-blue-500 to-cyan-500">
           <div className="flex items-start justify-between">
@@ -71,7 +72,7 @@ const Partner = () => {
           </div>
         </div>
       </div>
-    </>
+    </Wrapper>
   );
 };
 

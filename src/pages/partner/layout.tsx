@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { RiCustomerService2Line } from "react-icons/ri";
 import { axiosInstance } from "../../apis/axios";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
 import { useCookies } from "react-cookie";
+import { IoMdArrowBack } from "react-icons/io";
 import Avatar from "../../components/Avatar";
 import PartnerEndpoint from "../../apis/endpoints/partner";
 import useStore from "../../utils/use-store";
-import { IoMdArrowBack } from "react-icons/io";
 
 export interface PartnerLayoutProps {
   header?: {
@@ -48,7 +47,7 @@ const PartnerLayout = () => {
     }
   }, [cookie]);
 
-  if (partnerApi.checkToken.isPending) {
+  if (partnerApi.checkToken.isPending || !cookie.token) {
     return <div>Loading...</div>;
   }
 
@@ -58,11 +57,7 @@ const PartnerLayout = () => {
         {pathName === "/partner" ? (
           <div className="flex justify-between p-4">
             <div className="flex items-center gap-2">
-              <Avatar
-                value={
-                  "https://lh6.googleusercontent.com/proxy/ZLGihPRfkkerdJBqfRKKFRWQcXDCfMMuuK_6_IDH6Mfhu0VI3Du2L9eOTiz0yKsIftOesQQnj0whQCZFudjFH-cXgBKnebrpknuWtjKkDcRC5Ik"
-                }
-              />
+              <Avatar value="/partner.png" />
               <div>
                 <h5 className="font-semibold">{partner?.name}</h5>
                 <p className="text-sm opacity-60">Mitra</p>
