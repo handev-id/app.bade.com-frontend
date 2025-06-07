@@ -4,6 +4,7 @@ import { NumericFormat } from "react-number-format";
 import Menu from "../../components/bade/Menu";
 import useStore from "../../utils/use-store";
 import Wrapper from "../wrapper";
+import { FaCarRear } from "react-icons/fa6";
 
 const Partner = () => {
   const { partner } = useStore();
@@ -68,6 +69,12 @@ const Partner = () => {
               color="from-blue-500 to-cyan-400"
               Icon={FaUsers}
               title="Sopir"
+            />
+            <Menu
+              to="cars"
+              color="from-green-500 to-green-400"
+              Icon={FaCarRear}
+              title="Angkot"
             />
           </div>
         </div>

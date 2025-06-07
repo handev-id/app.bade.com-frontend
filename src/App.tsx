@@ -1,13 +1,11 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import Partner from "./pages/partner";
 import Drivers from "./pages/partner/drivers";
 import PartnerLayout from "./pages/partner/layout";
+import Cars from "./pages/partner/cars";
 
 const App = () => {
   return (
@@ -26,6 +24,10 @@ const App = () => {
             {
               path: "drivers",
               element: <Drivers />,
+            },
+            {
+              path: "cars",
+              element: <Cars />,
             },
           ],
         },

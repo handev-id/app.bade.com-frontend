@@ -1,6 +1,6 @@
+import { Partner } from "../models/partner";
 import useLazyGetApi from "../methods/lazy-get";
 import usePostApi from "../methods/post";
-import { Partner } from "../models/partner";
 
 export default function PartnerEndpoint() {
   const register = usePostApi<Partner, Partner>({

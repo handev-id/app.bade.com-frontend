@@ -1,7 +1,7 @@
+import { Driver } from "../models/driver";
 import useLazyGetApi from "../methods/lazy-get";
 import usePostApi from "../methods/post";
 import usePutApi from "../methods/put";
-import { Driver } from "../models/driver";
 
 export default function DriverEndpoint() {
   const index = useLazyGetApi<Driver[], {}>({

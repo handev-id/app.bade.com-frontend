@@ -4,14 +4,12 @@ import { Modal, useModal } from "../../components/modal";
 import { useForm } from "react-hook-form";
 import { Driver } from "../../apis/models/driver";
 import Input from "../../components/form/Input";
-import useStore from "../../utils/use-store";
 import Button from "../../components/button/Button";
 import DriverEndpoint from "../../apis/endpoints/driver";
 import toast from "react-hot-toast";
 import Wrapper from "../wrapper";
 
 const Drivers = () => {
-  const setHeader = useStore((state) => state.setHeader);
   const driverModal = useModal({});
 
   const driverApi = DriverEndpoint();
