@@ -6,12 +6,14 @@ import Partner from "./pages/partner";
 import Drivers from "./pages/partner/drivers";
 import PartnerLayout from "./pages/partner/layout";
 import Cars from "./pages/partner/cars";
+import DriverDetail from "./pages/home/driver-detail";
 
 const App = () => {
   return (
     <RouterProvider
       router={createBrowserRouter([
         { path: "/", element: <Home /> },
+        { path: "/driver/:id", element: <DriverDetail /> },
         {
           path: "/partner",
           element: <PartnerLayout />,
